@@ -1,12 +1,24 @@
-import React from 'react'
-import Navbar from './Componets/Navbar'
+import React, { useState } from "react";
+import Navbar from "./Componets/Navbar";
+import AppRoutes from "./Routes/AppRoutes";
+
 
 const App = () => {
-  return (
-    <div>
-      <Navbar/>
-    </div>
-  )
-}
+  const [isLogin, setIsLogin] = useState(true);
 
-export default App
+ 
+
+
+
+  return (
+    
+    <div>
+      <Navbar />
+      <AppRoutes />
+
+      
+    </div>
+  );
+};
+
+export default App;

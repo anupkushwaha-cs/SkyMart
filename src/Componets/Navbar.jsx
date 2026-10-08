@@ -1,59 +1,101 @@
-import React from 'react'
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 
-const Navbar = () => {
+const Navbar = ({setCurrentUser}) => {
+  const navigate = useNavigate();
+
+const currentUser = JSON.parse(
+  localStorage.getItem("currentUser")
+);
+
+const handleLogout = () => {
+  localStorage.removeItem("currentUser");
+  setCurrentUser(null);
+};
+
   return (
-    <div className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
-
-      {/* Logo */}
+    <div className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-[#0b1220]/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
       <div className="flex items-center gap-3">
-
-        <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl shadow-md">
+        <div className="w-11 h-11 rounded-xl bg-lime-300 flex items-center justify-center text-[#0b1220] text-xl shadow-[0_0_20px_rgba(190,255,50,0.25)]">
           ⚡
         </div>
 
-        <div className="text-2xl font-bold text-blue-600">
-          SkyMart
+        <div className="text-2xl font-extrabold tracking-tight text-white">
+          Sky<span className="text-lime-300">Mart</span>
         </div>
-
       </div>
 
-      {/* Navigation */}
-      <div className="flex items-center gap-8 font-medium">
-        <p className="cursor-pointer text-blue-600 hover:text-blue-800">
+      <div className="hidden md:flex items-center gap-2 font-medium">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `px-4 py-2 rounded-lg transition-all duration-300 ${
+              isActive
+                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                : "text-gray-400 hover:text-white hover:bg-white/5"
+            }`
+          }
+        >
           Home
-        </p>
+        </NavLink>
 
-        <p className="cursor-pointer text-purple-600 hover:text-purple-800">
+        <NavLink
+          to="/shop"
+          className={({ isActive }) =>
+            `px-4 py-2 rounded-lg transition-all duration-300 ${
+              isActive
+                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                : "text-gray-400 hover:text-white hover:bg-white/5"
+            }`
+          }
+        >
           Shop
-        </p>
+        </NavLink>
 
-        <p className="cursor-pointer text-pink-600 hover:text-pink-800">
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `px-4 py-2 rounded-lg transition-all duration-300 ${
+              isActive
+                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                : "text-gray-400 hover:text-white hover:bg-white/5"
+            }`
+          }
+        >
           About
-        </p>
+        </NavLink>
       </div>
 
-      {/* User & Cart */}
-      <div className="flex items-center gap-5">
-
-        <span className="font-semibold text-indigo-600">
-          ANUP
+      <div className="flex items-center gap-4 md:gap-6">
+        <span className="hidden sm:block font-semibold text-gray-200">
+          {currentUser ? currentUser.name : "Guest"}
         </span>
 
         <div className="flex items-center gap-2">
-          <span className="text-xl">🛒</span>
-          <span className="font-bold text-purple-600">
+          <NavLink
+            to="/cart"
+            className="relative w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 hover:border-lime-300/40 hover:bg-lime-300/10 transition-all duration-300"
+          >
+            <span className="text-xl cursor-pointer">
+              🛒
+            </span>
+          </NavLink>
+
+          <span className="min-w-[24px] h-6 px-1.5 flex items-center justify-center rounded-full bg-lime-300 text-[#0b1220] text-xs font-bold">
             4
           </span>
         </div>
 
-        <span className="text-xl text-blue-600 cursor-pointer">
+        <button
+          onClick={handleLogout}
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-xl text-gray-400 bg-white/5 border border-white/10 cursor-pointer hover:text-lime-300 hover:border-lime-300/40 hover:bg-lime-300/10 transition-all duration-300"
+          title="Logout"
+        >
           ↪
-        </span>
-
+        </button>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
