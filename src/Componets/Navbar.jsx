@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router";
 
-const Navbar = ({setCurrentUser}) => {
+const Navbar = () => {
   const navigate = useNavigate();
 
-const currentUser = JSON.parse(
-  localStorage.getItem("currentUser")
-);
+  const currentUser = JSON.parse(
+    localStorage.getItem("loggedinUser")
+  );
 
-const handleLogout = () => {
-  localStorage.removeItem("currentUser");
-  setCurrentUser(null);
-};
+  const handleLogout = () => {
+    localStorage.removeItem("loggedinUser");
+    navigate("/");
+  };
 
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-[#0b1220]/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
@@ -27,11 +27,11 @@ const handleLogout = () => {
 
       <div className="hidden md:flex items-center gap-2 font-medium">
         <NavLink
-          to="/"
+          to="/main"
           className={({ isActive }) =>
             `px-4 py-2 rounded-lg transition-all duration-300 ${
               isActive
-                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                ? "bg-lime-300 text-[#0b1220] font-semibold"
                 : "text-gray-400 hover:text-white hover:bg-white/5"
             }`
           }
@@ -44,7 +44,7 @@ const handleLogout = () => {
           className={({ isActive }) =>
             `px-4 py-2 rounded-lg transition-all duration-300 ${
               isActive
-                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                ? "bg-lime-300 text-[#0b1220] font-semibold"
                 : "text-gray-400 hover:text-white hover:bg-white/5"
             }`
           }
@@ -57,7 +57,7 @@ const handleLogout = () => {
           className={({ isActive }) =>
             `px-4 py-2 rounded-lg transition-all duration-300 ${
               isActive
-                ? "bg-lime-300 text-[#0b1220] font-semibold shadow-[0_0_15px_rgba(190,255,50,0.18)]"
+                ? "bg-lime-300 text-[#0b1220] font-semibold"
                 : "text-gray-400 hover:text-white hover:bg-white/5"
             }`
           }
