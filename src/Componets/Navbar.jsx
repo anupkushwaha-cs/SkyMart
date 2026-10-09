@@ -1,17 +1,24 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router";
+import { useContext } from "react";
+import { MyStore } from "../Context/AppContaxts";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const currentUser = JSON.parse(
-    localStorage.getItem("loggedinUser")
-  );
+  const currentUser = JSON.parse(localStorage.getItem("loggedinUser"));
 
   const handleLogout = () => {
     localStorage.removeItem("loggedinUser");
     navigate("/");
   };
+
+  const { cartItems } = useContext(MyStore);
+
+  const cartCount = cartItems.reduce(
+    (total, item) => total + (item.quantity || 1),
+    0,
+  );
 
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-[#0b1220]/95 backdrop-blur-xl border-b border-white/10 shadow-lg">
@@ -76,13 +83,11 @@ const Navbar = () => {
             to="/cart"
             className="relative w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 hover:border-lime-300/40 hover:bg-lime-300/10 transition-all duration-300"
           >
-            <span className="text-xl cursor-pointer">
-              🛒
-            </span>
+            <span className="text-xl cursor-pointer">🛒</span>
           </NavLink>
 
           <span className="min-w-[24px] h-6 px-1.5 flex items-center justify-center rounded-full bg-lime-300 text-[#0b1220] text-xs font-bold">
-            4
+            {cartCount}
           </span>
         </div>
 

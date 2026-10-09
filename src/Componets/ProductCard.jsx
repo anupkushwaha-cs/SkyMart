@@ -3,46 +3,31 @@ import { useNavigate } from "react-router";
 import { MyStore } from "../Context/AppContaxts";
 
 const ProductCard = ({ product }) => {
-  const { cartItems, setCartItems } = useContext(MyStore);
-  let navigate = useNavigate();
+  const { setCartItems } = useContext(MyStore);
+  const navigate = useNavigate();
 
-const addToCart = () => {
-  setCartItems((prev) => {
-    const existingProduct = prev.find(
-      (item) => item.id === product.id
-    );
-
-    if (existingProduct) {
-      return prev.map((item) =>
-        item.id === product.id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
+  const addToCart = () => {
+    setCartItems((prev) => {
+      const existingProduct = prev.find(
+        (item) => item.id === product.id
       );
-    }
 
-    return [
-      ...prev,
-      {
-        ...product,
-        quantity: 1,
-      },
-    ];
-  });
-};
+      if (existingProduct) {
+        return prev;
+      }
+
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
 
   return (
     <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="h-64 overflow-hidden bg-gray-50">
         <img
-          onClick={() => {
-           navigate(`/products/${product.id}`);
-          }}
+          onClick={() => navigate(`/products/${product.id}`)}
           src={product.thumbnail}
           alt={product.title}
-          className="h-full w-full object-contain p-6 transition duration-500 hover:scale-105"
+          className="h-full w-full cursor-pointer object-contain p-6 transition duration-500 hover:scale-105"
         />
       </div>
 
@@ -70,7 +55,9 @@ const addToCart = () => {
         </div>
 
         <div className="mt-5 flex items-center justify-between">
-          <h3 className="text-2xl font-bold text-gray-900">${product.price}</h3>
+          <h3 className="text-2xl font-bold text-gray-900">
+            ${product.price}
+          </h3>
 
           <button
             onClick={addToCart}
